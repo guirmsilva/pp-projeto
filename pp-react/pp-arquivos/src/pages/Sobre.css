@@ -1,0 +1,29 @@
+.descricao {
+    color: #222;
+    text-align: justify;
+    padding: 20px;
+}
+
+.sobreTitle {
+    padding: 10px 0px 1px 0px;
+}
+
+.faleComigo {
+    padding-top: 20px;
+}
+
+.contato {
+    text-align: left;
+    padding: 0px 0px 7px 20px;
+    display: flex;
+}
+
+.contato > a {
+    color: #222;
+    font-weight: bolder;
+}
+
+.redes {
+    padding-right: 10px;
+    color: #222;
+}

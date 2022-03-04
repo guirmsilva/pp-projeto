@@ -1,0 +1,24 @@
+.big-container {
+    background-color: rgb(221, 221, 221);
+    width: 430px;
+    text-align: center;
+    margin: auto;
+    margin-bottom: 10px;
+    border-radius: 7px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.671);
+}
+
+.big-container:hover {
+    background-color: rgb(145, 132, 114);
+    transition-duration: .4s;
+}
+
+.container-title {
+    padding: 35px 0px;
+    font-size: 22px;
+}
+
+.container-link {
+    text-decoration: none;
+    color: #222;
+}

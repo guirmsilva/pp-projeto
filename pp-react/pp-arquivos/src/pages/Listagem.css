@@ -1,0 +1,10 @@
+.bigBoxListagem {
+    margin: auto;
+    text-align: center;
+    margin-top: 120px;
+    margin-bottom: 50px;
+    background-color: rgb(221, 221, 221);
+    width: 350px;
+    border-radius: 14px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.671);
+}

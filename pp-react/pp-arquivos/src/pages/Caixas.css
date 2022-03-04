@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+
+.bigBox {
+    margin: auto;
+    text-align: center;
+    margin-top: 120px;
+    background-color: rgb(221, 221, 221);
+    width: 350px;
+    border-radius: 14px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.671);
+}
+
+.field {
+    margin-bottom: 8px;
+}
+
+input {
+    border-radius: 5px;
+    box-shadow: 1.5px 1.5px rgb(0, 0, 0, 0.2);
+    border: 0;
+    padding: 5px 20px;
+    margin: auto;
+    display: block;
+}
+
+.tituloCaixa {
+    padding: 20px 0px 25px 0px;
+}
+
+label {
+    color: rgb(145, 141, 141);
+    font-size: 14px;
+    font-weight: lighter;
+}
+
+.errorMessage {
+    font-size: 13px;
+    color: rgb(209, 47, 47)
+}
+
+.botoes {
+    padding: 50px 0px 20px 0px;
+}
+
+.footerSecundario {
+    display: inline;
+    padding: 0px 30px;
+}
+
+.botaoVoltar {
+    text-decoration: none;
+    color: rgb(119, 115, 115);
+}
+
+.botaoConcluir {
+    padding: 4px 8px;
+    background-color: rgb(145, 132, 114);
+    transition-duration: .4s;
+    border: 0;
+    border-radius: 3px;
+    font: 'Quicksand';
+    font-size: 14px;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.671);
+}
+
+.botaoConcluir:hover {
+    cursor: pointer;
+    background-color: rgb(119, 109, 94);
+}
+
+.voltarButton {
+    padding: 20px 0px 20px 0px;
+}
+
+.voltarText {
+    color: rgb(119, 115, 115);
+}

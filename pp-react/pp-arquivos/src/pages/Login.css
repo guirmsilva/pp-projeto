@@ -1,0 +1,17 @@
+.rodapeCadastro {
+    text-align: center;
+    color: rgb(221, 221, 221);
+    margin-top: 10px;
+    font-size: 17px;
+}
+
+.linkCadastro {
+    color: rgb(221, 221, 221);
+    font-weight: bolder;
+    font-size: 17px;
+}
+
+.linkCadastro:hover {
+    color: rgb(145, 132, 114);
+    transition-duration: .4s;
+}
