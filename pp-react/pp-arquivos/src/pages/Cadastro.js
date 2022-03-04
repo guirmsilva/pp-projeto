@@ -1,5 +1,3 @@
-// fazer a senha/confirmar senha com useState pra pegar os valores
-
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
