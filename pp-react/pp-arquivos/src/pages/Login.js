@@ -3,10 +3,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 import api from '../services/api';
 
 import ControlButtons from '../components/ControlButtons';
+import LoginFailedMessage from '../components/LoginFailedMessage';
 
 import './Login.css';
 import './Caixas.css';
@@ -20,12 +22,21 @@ function Login() {
 
     const navigate = useNavigate();
 
+    const [ loginStatus, setLoginStatus ] = useState(false);
+    const [ loginDenied, setLoginDenied ] = useState(false);
+
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(validLogin)
     });
 
     const sendLogin = data => {
-        api.post('/login', data);
+        api.post('/login', data)
+        .then(() => {
+            setLoginStatus(true);
+        })
+        .catch(() => {
+            setLoginDenied(true);
+        });
     };
 
     return (
@@ -48,6 +59,9 @@ function Login() {
                     <input type="password" {...register("password")} />
 
                     <p className="errorMessage">{errors.password?.message}</p>
+
+                    {loginStatus && navigate('/logged')}
+                    {loginDenied && <LoginFailedMessage />}
 
                 </div>
 

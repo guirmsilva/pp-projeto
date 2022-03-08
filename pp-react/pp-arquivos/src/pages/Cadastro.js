@@ -21,6 +21,7 @@ function Cadastro() {
 
     const [ password, setPassword ] = useState('');
     const [ passwordConfirm, setPasswordConfirm ] = useState('');
+    const [ passwordValidation, setPasswordValidation ] = useState(false);
 
     const navigate = useNavigate();
 
@@ -33,7 +34,7 @@ function Cadastro() {
                 api.post('/user', data);
                 navigate('/');
             } else {
-                alert('Confirme sua senha!')
+                setPasswordValidation(true);
             };
     };
 
@@ -45,7 +46,7 @@ function Cadastro() {
 
                 <div className="field">
 
-                    <label>Nome</label>
+                    <label>Nome Completo</label>
                     <input type="text" name="name" {...register("name")} />
 
                     <p className="errorMessage">{errors.name?.message}</p>
@@ -78,6 +79,8 @@ function Cadastro() {
                     <input type="password" name="passwordConfirm" id="pwc" {...register("passwordConfirm")} onChange={(e) => setPasswordConfirm(e.target.value)} />
 
                     <p className="errorMessage">{errors.passwordConfirm?.message}</p>
+
+                    {passwordValidation && <p className="errorMessage">As senhas não conferem</p>}
 
                 </div>
 

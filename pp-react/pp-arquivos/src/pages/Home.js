@@ -6,7 +6,7 @@ import './Home.css';
 function Home() {
     return (
         <main>
-          <h1 id="tituloPrincipal">Bem-vindo ao meu site.</h1>
+          <h1 id="tituloPrincipal">Seja bem-vindo ao meu site.</h1>
 
           
           <BigButton title="Login / Cadastro" rota="login" />
