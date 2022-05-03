@@ -67,7 +67,9 @@ router.post('/', async (req, res) => {
 
         const secret = process.env.SECRET;
 
-        const token = jwt.sign({ id: user._id }, secret);
+        const token = jwt.sign({ id: user._id }, secret, {
+            expiresIn: 86400
+        });
 
         res.status(200).json({ msg: 'Autenticação realizada com sucesso', token });
 

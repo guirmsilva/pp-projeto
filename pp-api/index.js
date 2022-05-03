@@ -16,12 +16,15 @@ app.use('/user', userController);
 const loginController = require('./controllers/loginController');
 app.use('/login', loginController);
 
+const pdfController = require('./controllers/pdfController');
+app.use('/pdf', pdfController);
+
 const DB_USER = process.env.DB_USER;
 const DB_PASSWORD = encodeURIComponent(process.env.DB_PASSWORD);
 
 mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASSWORD}@portifoliocluster.cwcxt.mongodb.net/portifoliodb?retryWrites=true&w=majority`)
 .then(() => {
-    console.log('MongoDB Connected')
+    console.log('MongoDB Connected');
     app.listen(8000);
 })
 .catch(() => {

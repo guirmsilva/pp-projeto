@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
     const userExists = await User.findOne({ email: email });
 
     if (userExists) {
-        return res.status(422).json({ msg : 'Utilize outro email' });
+        return res.status(422).json({ msg: 'Utilize outro email' });
     };
 
     // create password
