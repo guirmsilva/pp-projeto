@@ -31,7 +31,8 @@ function Login() {
 
     const sendLogin = data => {
         api.post('/login', data)
-        .then(() => {
+        .then(() => 
+        {
             setLoginStatus(true);
             localStorage.setItem('refreshToken', 'guilherme');
         })

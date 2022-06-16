@@ -16,9 +16,6 @@ app.use('/user', userController);
 const loginController = require('./controllers/loginController');
 app.use('/login', loginController);
 
-const pdfController = require('./controllers/pdfController');
-app.use('/pdf', pdfController);
-
 const DB_USER = process.env.DB_USER;
 const DB_PASSWORD = encodeURIComponent(process.env.DB_PASSWORD);
 
