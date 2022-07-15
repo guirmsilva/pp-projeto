@@ -1,0 +1,289 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Portifólio",
+        "description": "Essa API faz uma manipulação de usuários (CRUD) em um banco de dados NoSQL",
+        "termsOfService": "https://localhost:8000/terms",
+        "contact": {
+            "email": "devguilhermeramos@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000",
+            "description": "API de teste"
+        }
+    ],
+    "paths": {
+        "/user": {
+            "post": {
+                "summary": "Cadastro de usuário",
+                "description": "Essa rota cria um usuário no banco de dados",
+                "tags": ["User"],
+                "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples": {
+                                "user": {
+                                    "value": {
+                                        "name": "Guizin",
+                                        "email": "devguizin@gmail.com",
+                                        "password": "123abc",
+                                        "passwordConfirm": "123abc"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Algum campo obrigatório não foi preenchido"
+                    },
+                    "500": {
+                        "description": "Não foi possível cadastrar o usuário"
+                    },
+                    "201": {
+                        "description": "Usuário cadastrado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "summary": "Resgate de usuários",
+                "description": "Resgate simultâneo de todos os usuáruios",
+                "tags": ["User"],
+                "responses": {
+                    "200": {
+                        "description": "Listagem de Usuários",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/User"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/{id}": {
+            "get": {
+                "summary": "Resgate de usuário",
+                "description": "Resgate de um usuário pelo ID",
+                "tags": ["User"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do usuário",
+                        "required": "true"
+                    }
+                ],
+                "responses": {
+                    "422": {
+                        "description": "Usuário não encontrado"
+                    },
+                    "200": {
+                        "description": "Usuário encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro ao encontrar o usuário"
+                    }
+                }
+            },
+            "patch": {
+                "summary": "Atualização de usuário",
+                "description": "Atualização de um usuário pelo ID",
+                "tags": ["User"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do usuário",
+                        "required": "true"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples": {
+                                "user": {
+                                    "value": {
+                                        "name": "Guizin Moral",
+                                        "email": "devguizinmoral@gmail.com",
+                                        "password": "123abcmoral",
+                                        "passwordConfirm": "123abcmoral"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Usuário não encontrado"
+                    },
+                    "200": {
+                        "description": "Usuário atualizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro ao atualizar o usuário"
+                    }
+                }
+            },
+            "delete": {
+                "sumarry": "Deleção de usuário",
+                "description": "Deleção de usuário pelo ID",
+                "tags": ["User"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do usuário",
+                        "required": "true"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuário deletado com sucesso"
+                    },
+                    "500": {
+                        "description": "Erro ao deletar o usuário"
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "summary": "Validação de login",
+                "description": "Validação de login do usuário",
+                "tags": ["Login"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples": {
+                                "user": {
+                                    "value": {
+                                        "email": "devguizinmoral@gmail.com",
+                                        "password": "123abcmoral"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Algum campo obrigatório não foi preenchido"
+                    },
+                    "404": {
+                        "description": "Usuário não autenticado"
+                    },
+                    "200": {
+                        "description": "Autenticação realizada com sucesso"
+                    },
+                    "500": {
+                        "description": "Erro no servidor"
+                    }
+                }
+            }
+        },
+        "/login/{id}": {
+            "get": {
+                "summary": "Rota privada",
+                "description": "Rota privada de usuário",
+                "tags": ["Login"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do usuário",
+                        "required": "true"
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Usuário não encontrado"
+                    },
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Usuário não autenticado"
+                    },
+                    "400": {
+                        "description": "Token inválido"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "passwordConfirm": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}

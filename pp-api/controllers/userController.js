@@ -1,3 +1,5 @@
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMWQzNWYyNjYxNDM2NmM4ZDg2ODNiOCIsImlhdCI6MTY0Nzc2NDAzNSwiZXhwIjoxNjQ3ODUwNDM1fQ.7_QjnqN7Kg5vhWtrk9QzW7eKS0tYH7UfpK17gLpVIZg
+
 const bcrypt = require('bcrypt');
 
 const router = require('express').Router();
@@ -83,10 +85,15 @@ router.get('/:id', async (req, res) => {
 router.patch('/:id', async (req, res) => {
     const id = req.params.id;
     const { name, email, password } = req.body;
+
+    // create password
+    const salt = await bcrypt.genSalt(12);
+    const passwordHash = await bcrypt.hash(password, salt);
+
     const user = {
         name,
         email,
-        password
+        password: passwordHash
     };
 
     try {

@@ -21,6 +21,7 @@ input {
     padding: 5px 20px;
     margin: auto;
     display: block;
+    outline: none;
 }
 
 .tituloCaixa {

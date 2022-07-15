@@ -4,39 +4,6 @@ const bcrypt = require('bcrypt');
 const router = require('express').Router();
 const User = require('../models/User');
 
-// Rota Privada
-router.get('/:id', checkToken, async (req, res) => {
-    const id = req.params.id;
-
-    // ver se o usuário existe
-    const user = await User.findById(id, '-password');
-
-    if (!user) {
-        return res.status(404).json({ msg: 'Usuário não encontrado' });
-    };
-
-    res.status(200).json({ user });
-});
-
-function checkToken (req, res, next) {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
-
-    if (!token) {
-        return res.status(401).json({ msg: 'Acesso negado' });
-    };
-
-    try {
-        const secret = process.env.SECRET;
-
-        jwt.verify(token, secret);
-
-        next()
-    } catch {
-        res.status(400).json({ msg: 'Token inválido' });
-    };
-};
-
 // Validação de login
 router.post('/', async (req, res) => {
     const { email, password } = req.body;
@@ -78,5 +45,38 @@ router.post('/', async (req, res) => {
     };
 
 });
+
+// Rota Privada
+router.get('/:id', checkToken, async (req, res) => {
+    const id = req.params.id;
+
+    // ver se o usuário existe
+    const user = await User.findById(id, '-password');
+
+    if (!user) {
+        return res.status(404).json({ msg: 'Usuário não encontrado' });
+    };
+
+    res.status(200).json({ user });
+});
+
+function checkToken (req, res, next) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+
+    if (!token) {
+        return res.status(401).json({ msg: 'Usuário não autenticado' });
+    };
+
+    try {
+        const secret = process.env.SECRET;
+
+        jwt.verify(token, secret);
+
+        next()
+    } catch {
+        res.status(400).json({ msg: 'Token inválido' });
+    };
+};
 
 module.exports = router;
