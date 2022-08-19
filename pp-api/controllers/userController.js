@@ -1,5 +1,3 @@
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMWQzNWYyNjYxNDM2NmM4ZDg2ODNiOCIsImlhdCI6MTY0Nzc2NDAzNSwiZXhwIjoxNjQ3ODUwNDM1fQ.7_QjnqN7Kg5vhWtrk9QzW7eKS0tYH7UfpK17gLpVIZg
-
 const bcrypt = require('bcrypt');
 
 const router = require('express').Router();
@@ -9,19 +7,12 @@ const User = require('../models/User');
 router.post('/', async (req, res) => {
     const { name, email, password, passwordConfirm } = req.body;
 
-    if (!name) {
-        res.status(422).json({ error: 'O campo nome é obrigatório' });
-        return
-    };
+    const params = [['name', name], ['email', email], ['password', password], ['passwordConfirm', passwordConfirm ]];
 
-    if (!email) {
-        res.status(422).json({ error: 'O campo email é obrigatório' });
-        return
-    };
-
-    if (!password) {
-        res.status(422).json({ error: 'O campo senha é obrigatório' });
-        return
+    for (var i = 0; i < params.length ; i++) {
+        if (params[i][1] == undefined) {
+            return res.status(422).json({error: `O campo ${params[i][0]} é obrigatório`});
+        };
     };
 
     if (password !== passwordConfirm) {
@@ -50,6 +41,19 @@ router.post('/', async (req, res) => {
         res.status(201).json({ message: 'Usuário cadastrado com sucesso' });
     } catch {
         res.status(500).json({ error: 'Não foi possível cadastrar o usuário' });
+    };
+
+    const array = {
+        name: {
+            minLength: 2,
+            maxLength: 300,
+            required: true
+        },
+        email: {
+            type: 'email',
+            required: true,
+
+        }
     };
 });
 
