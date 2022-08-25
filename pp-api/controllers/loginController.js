@@ -8,13 +8,13 @@ const User = require('../models/User');
 router.post('/', async (req, res) => {
     const { email, password } = req.body;
 
-    if (!email) {
-        return res.status(422).json({ msg: 'O email é obrigatório' });
-    };
+    const params = [['email', email], ['password', password]];
 
-    if (!password) {
-        return res.status(422).json({ msg: 'A senha é obrigatória' });
-    };
+    for (var i = 0 ; i < params.length ; i++) {
+        if (params[i][1] == undefined) {
+            return res.status(422).json({ msg: `O campo ${params[i][0]} é obrigatório` });
+        }
+    }
 
     // ver se o usuário existe
     const user = await User.findOne({ email: email });
@@ -73,7 +73,7 @@ function checkToken (req, res, next) {
 
         jwt.verify(token, secret);
 
-        next()
+        next();
     } catch {
         res.status(400).json({ msg: 'Token inválido' });
     };
