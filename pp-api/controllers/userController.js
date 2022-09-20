@@ -52,9 +52,9 @@ router.post('/', async (req, res) => {
         }
 
         if (params[i][1].length < config[i].minLength) {
-            return res.status(400).json({ error: 'O limite mínimo de caracteres não foi alcançado' });
+            return res.status(400).json({ error: `O limite mínimo de caracteres do campo ${params[i][0]} não foi alcançado` });
         } else if (params[i][1] > config[i].maxLength) {
-            return res.status(400).json({ error: 'O limite máximo de caracteres foi ultrapassado' });
+            return res.status(400).json({ error: `O limite máximo de caracteres do campo ${params[i][0]} foi ultrapassado` });
         }
     };
 
