@@ -30,5 +30,5 @@ mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASSWORD}@portifoliocluster.cwcx
     app.listen(8000);
 })
 .catch(() => {
-    console.log('Erro ao conectar ao banco de dados');
+    console.log('Erro ao conectar no banco de dados');
 });

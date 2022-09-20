@@ -9,10 +9,53 @@ router.post('/', async (req, res) => {
 
     const params = [['name', name], ['email', email], ['password', password], ['passwordConfirm', passwordConfirm ]];
 
+    const config = [
+        {
+            type: 'name',
+            minLength: 2,
+            maxLength: 300,
+            required: true
+        },
+
+        {
+            type: 'email',
+            minLength: 2,
+            maxLength: 300,
+            required: true,
+        },
+
+        {
+            type: 'password',
+            minLength: 6,
+            maxLength: 300,
+            required: true
+        },
+
+        {
+            type: 'passwordConfirm',
+            minLength: 6,
+            maxLength: 300,
+            required: true
+        }
+    ];
+
     for (var i = 0; i < params.length ; i++) {
-        if (params[i][1] == undefined) {
-            return res.status(422).json({error: `O campo ${params[i][0]} é obrigatório`});
-        };
+
+        if (config[i].required == true) {
+            if (params[i][1] == undefined) {
+                return res.status(422).json({ error: `O campo ${params[i][0]} é obrigatório` });
+            }
+        }
+
+        if (params[i][0] != config[i].type) {
+            return res.status(500).json({ error: 'Erro do servidor. Tente novamente mais tarde' });
+        }
+
+        if (params[i][1].length < config[i].minLength) {
+            return res.status(400).json({ error: 'O limite mínimo de caracteres não foi alcançado' });
+        } else if (params[i][1] > config[i].maxLength) {
+            return res.status(400).json({ error: 'O limite máximo de caracteres foi ultrapassado' });
+        }
     };
 
     if (password !== passwordConfirm) {
@@ -41,19 +84,6 @@ router.post('/', async (req, res) => {
         res.status(201).json({ message: 'Usuário cadastrado com sucesso' });
     } catch {
         res.status(500).json({ error: 'Não foi possível cadastrar o usuário' });
-    };
-
-    const array = {
-        name: {
-            minLength: 2,
-            maxLength: 300,
-            required: true
-        },
-        email: {
-            type: 'email',
-            required: true,
-
-        }
     };
 });
 
