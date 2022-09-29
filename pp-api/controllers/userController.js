@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 
 const router = require('express').Router();
 const User = require('../models/User');
+const settings = require('./userConfig');
 
 // Cadastro de Usuário
 router.post('/', async (req, res) => {
@@ -9,51 +10,18 @@ router.post('/', async (req, res) => {
 
     const params = [['name', name], ['email', email], ['password', password], ['passwordConfirm', passwordConfirm ]];
 
-    const config = [
-        {
-            type: 'name',
-            minLength: 2,
-            maxLength: 300,
-            required: true
-        },
-
-        {
-            type: 'email',
-            minLength: 2,
-            maxLength: 300,
-            required: true,
-        },
-
-        {
-            type: 'password',
-            minLength: 6,
-            maxLength: 300,
-            required: true
-        },
-
-        {
-            type: 'passwordConfirm',
-            minLength: 6,
-            maxLength: 300,
-            required: true
-        }
-    ];
-
     for (var i = 0; i < params.length ; i++) {
-
-        if (config[i].required == true) {
-            if (params[i][1] == undefined) {
-                return res.status(422).json({ error: `O campo ${params[i][0]} é obrigatório` });
-            }
+        if (settings.requirements[i].required == true && params[i][1] == undefined) {
+            return res.status(422).json({ error: `O campo ${params[i][0]} é obrigatório` });
         }
 
-        if (params[i][0] != config[i].type) {
+        if (params[i][0] != settings.requirements[i].type) {
             return res.status(500).json({ error: 'Erro do servidor. Tente novamente mais tarde' });
         }
 
-        if (params[i][1].length < config[i].minLength) {
+        if (params[i][1].length < settings.requirements[i].minLength) {
             return res.status(400).json({ error: `O limite mínimo de caracteres do campo ${params[i][0]} não foi alcançado` });
-        } else if (params[i][1] > config[i].maxLength) {
+        } else if (params[i][1].length > settings.requirements[i].maxLength) {
             return res.status(400).json({ error: `O limite máximo de caracteres do campo ${params[i][0]} foi ultrapassado` });
         }
     };
@@ -108,7 +76,7 @@ router.get('/:id', async (req, res) => {
             return
         }
 
-        res.status(200).json(user)
+        res.status(200).json(user);
 
     } catch {
         res.status(500).json({ error: 'Erro ao encontrar o usuário' });
